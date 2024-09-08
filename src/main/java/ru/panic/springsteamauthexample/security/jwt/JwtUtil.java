@@ -65,7 +65,7 @@ public class JwtUtil {
         return Jwts.builder()
                 .setHeaderParam("typ", "JWT")
                 .setClaims(claims)
-                .setSubject(String.valueOf(subject))
+                .setSubject(subject)
                 .setIssuedAt(dateNow)
                 .setExpiration(expirationDate)
                 .signWith(Keys.hmacShaKeyFor(signingKeyBytes), SignatureAlgorithm.HS256)
