@@ -1,5 +1,6 @@
 CREATE TABLE IF NOT EXISTS users_table(
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    username VARCHAR(33) NOT NULL,
     registered_at TIMESTAMP NOT NULL
 );
 

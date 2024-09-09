@@ -34,7 +34,9 @@ public class SecurityConfiguration {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(authenticationEntryPoint))
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/error/**").permitAll()
+                    auth
+                            .requestMatchers("/error/**").permitAll()
+                            .requestMatchers("/api/v1/auth/**").permitAll()
                             .anyRequest().authenticated();
                 })
                 .authenticationProvider(authenticationProvider())
