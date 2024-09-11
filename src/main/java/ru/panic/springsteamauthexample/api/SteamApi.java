@@ -30,6 +30,7 @@ public class SteamApi {
         if (response.getBody() == null) {
             log.warn("null response in getAllSteamUserPlayerSummaryBySteamIds in SteamApi");
         }
+
         return response.getBody();
     }
 
@@ -41,13 +42,14 @@ public class SteamApi {
             log.warn("null response in checkAuthentication in SteamApi");
         }
 
-        boolean isValid = response.getBody().contains("true");
+        System.out.println(response.getBody());
 
-        return isValid;
+        //Check that Steam didn't give us a full html page with validation error and that the data is valid
+        return response.getBody().contains("true");
     }
 
     private String buildCheckAuthenticationUrl(SteamAuthenticateRequest steamAuthenticateRequest) {
-        return STEAM_URL + "?openid.ns=" + steamAuthenticateRequest.openidNs()
+        return STEAM_URL + "/openid/login?openid.ns=" + steamAuthenticateRequest.openidNs()
                 + "&openid.mode=check_authentication"
                 + "&openid.op_endpoint=" + steamAuthenticateRequest.openidOpEndpoint()
                 + "&openid.claimed_id=" + steamAuthenticateRequest.openidClaimedId()

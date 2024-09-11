@@ -5,13 +5,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
+import ru.panic.springsteamauthexample.dto.UserDto;
 import ru.panic.springsteamauthexample.payload.request.SteamAuthenticateRequest;
 import ru.panic.springsteamauthexample.payload.response.SteamAuthenticateResponse;
 import ru.panic.springsteamauthexample.property.oauth.SteamOauthProperty;
 import ru.panic.springsteamauthexample.service.AuthService;
 
 import java.net.URI;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -44,5 +47,10 @@ public class AuthController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(authService.authenticateBySteam(request));
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<UserDto> getAuthUser(UsernamePasswordAuthenticationToken authToken) {
+        return ResponseEntity.ok(authService.getAuthUser(UUID.fromString((String) authToken.getPrincipal())));
     }
 }

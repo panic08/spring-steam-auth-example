@@ -24,7 +24,7 @@ import ru.panic.springsteamauthexample.security.jwt.JwtAuthFilter;
 public class SecurityConfiguration {
 
     private final AuthenticationEntryPoint authenticationEntryPoint;
-    private final BaseUserDetailsService baseUserDetailsService;
+    private final BaseUserDetailsService userDetailsService;
     private final JwtAuthFilter jwtAuthFilter;
 
     @Bean
@@ -36,7 +36,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> {
                     auth
                             .requestMatchers("/error/**").permitAll()
-                            .requestMatchers("/api/v1/auth/**").permitAll()
+                            .requestMatchers("/api/v1/auth/steam/**").permitAll()
                             .anyRequest().authenticated();
                 })
                 .authenticationProvider(authenticationProvider())
@@ -48,7 +48,7 @@ public class SecurityConfiguration {
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
 
-        authProvider.setUserDetailsService(baseUserDetailsService);
+        authProvider.setUserDetailsService(userDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder());
 
         return authProvider;
